@@ -16,7 +16,8 @@ export function pageMetadata(
   const url = siteHref(site, locale, path);
 
   return {
-    title,
+    // Without a title of its own (the home page) the page takes the site name.
+    title: title ?? { absolute: site.name },
     description,
     alternates: {
       canonical: url,

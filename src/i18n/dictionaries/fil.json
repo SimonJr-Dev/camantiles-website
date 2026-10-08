@@ -10,7 +10,9 @@
     "schools": "Mga Paaralan",
     "allSchools": "Lahat ng paaralan",
     "allSchoolsHint": "Buod ng enrollment",
-    "breadcrumb": "Breadcrumb"
+    "breadcrumb": "Breadcrumb",
+    "menu": "Menu",
+    "submenu": "Menu ng {label}"
   },
   "sections": {
     "hall": "Barangay Hall",
@@ -109,7 +111,8 @@
     "council": "Sangguniang Barangay",
     "forms": "Mga form na mada-download",
     "backToAnnouncements": "Bumalik sa mga anunsyo",
-    "pageTitle": "Barangay Hall at mga Anunsyo"
+    "pageTitle": "Barangay Hall at mga Anunsyo",
+    "empty": "Wala pang anunsyo. Bumalik po muli sa susunod."
   },
   "health": {
     "lead": "Libreng check-up, bakuna, pangangalaga sa ina at mga programang pangkalusugan mula sa Barangay Health Center.",

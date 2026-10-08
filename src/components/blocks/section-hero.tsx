@@ -47,7 +47,7 @@ function SectionHero({
     <div className="flex flex-wrap gap-5">
       <div
         className={cn(
-          "relative flex min-h-[460px] flex-[2_1_560px] flex-col justify-between gap-10 overflow-hidden rounded-panel p-7 text-white sm:p-12",
+          "relative flex flex-[2_1_560px] flex-col justify-between gap-8 overflow-hidden rounded-panel p-7 text-white sm:min-h-[460px] sm:gap-10 sm:p-12",
           tones[tone].panel
         )}
       >

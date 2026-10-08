@@ -2,6 +2,7 @@ import Link from "next/link"
 import { ArrowRight, ArrowUpRight } from "lucide-react"
 
 import { EventRow } from "@/components/blocks/event-row"
+import { OrganizationData } from "@/components/blocks/organization-data"
 import { NewsCard } from "@/components/blocks/news-card"
 import { PersonCard } from "@/components/blocks/person-card"
 import { SectionIcon } from "@/components/blocks/section-icon"
@@ -42,6 +43,7 @@ async function HomeScreen({ ctx }: { ctx: PageContext }) {
 
   return (
     <>
+      <OrganizationData ctx={ctx} />
       {advisoryText ? (
         <Link
           href={hallHref}
@@ -56,7 +58,7 @@ async function HomeScreen({ ctx }: { ctx: PageContext }) {
       ) : null}
 
       <div className="flex flex-wrap gap-5">
-        <Panel className="relative flex min-h-[500px] flex-[2_1_560px] flex-col justify-between gap-12 overflow-hidden p-7 sm:p-12">
+        <Panel className="relative flex flex-[2_1_560px] flex-col justify-between gap-8 overflow-hidden p-7 sm:min-h-[500px] sm:gap-12 sm:p-12">
           <div
             aria-hidden
             className="absolute -right-[120px] -bottom-[160px] box-content size-[420px] rounded-full border-[64px] border-accent/12"
@@ -124,25 +126,28 @@ async function HomeScreen({ ctx }: { ctx: PageContext }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(230px,1fr))] gap-5">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-[repeat(auto-fit,minmax(230px,1fr))] sm:gap-5">
         {site.homeQuickLinks.map((module) => (
           <Link
             key={module}
             href={siteHref(site, locale, MODULES[module].path)}
             className="text-foreground no-underline transition-transform duration-200 hover:-translate-y-1"
           >
-            <Card className="flex h-full flex-col justify-between gap-12 p-6">
+            <Card className="flex h-full flex-col justify-between gap-5 p-4 sm:gap-12 sm:p-6">
               <div className="flex items-start justify-between">
-                <IconTile tone={MODULES[module].tone}>
+                <IconTile
+                  tone={MODULES[module].tone}
+                  className="max-sm:size-11 max-sm:rounded-[14px] max-sm:[&_svg]:size-[22px]"
+                >
                   <SectionIcon module={module} />
                 </IconTile>
-                <ArrowBadge />
+                <ArrowBadge className="max-sm:hidden" />
               </div>
               <div className="flex flex-col gap-1.5">
-                <strong className="text-[21px] tracking-[-0.02em]">
+                <strong className="text-[15px] tracking-[-0.01em] sm:text-[21px] sm:tracking-[-0.02em]">
                   {module === "schools" ? copy.schoolsTitle : dict.sections[module]}
                 </strong>
-                <span className="text-sm leading-normal text-muted-foreground">
+                <span className="text-sm leading-normal text-muted-foreground max-sm:hidden">
                   {quickCopy[module]}
                 </span>
               </div>
@@ -151,44 +156,48 @@ async function HomeScreen({ ctx }: { ctx: PageContext }) {
         ))}
       </div>
 
-      <section className="flex flex-col gap-6 pt-12">
-        <SectionHeading
-          overline={home.newsOverline}
-          title={home.newsTitle}
-          action={
-            <Link href={hallHref} className={buttonVariants({ variant: "white" })}>
-              {home.allAnnouncements}
-            </Link>
-          }
-        />
-        <div className="flex flex-wrap gap-5">
-          <div className="grid min-w-0 flex-[999_1_600px] grid-cols-[repeat(auto-fit,minmax(270px,1fr))] gap-5">
-            {news.map((item) => (
-              <NewsCard key={item.slug} item={item} ctx={ctx} />
-            ))}
+      {news.length > 0 || events.length > 0 ? (
+        <section className="flex flex-col gap-6 pt-12">
+          <SectionHeading
+            overline={home.newsOverline}
+            title={home.newsTitle}
+            action={
+              <Link href={hallHref} className={buttonVariants({ variant: "white" })}>
+                {home.allAnnouncements}
+              </Link>
+            }
+          />
+          <div className="flex flex-wrap gap-5">
+            <div className="grid min-w-0 flex-[999_1_600px] grid-cols-[repeat(auto-fit,minmax(270px,1fr))] gap-5">
+              {news.map((item) => (
+                <NewsCard key={item.slug} item={item} ctx={ctx} />
+              ))}
+            </div>
+            <Card
+              className={cn(
+                "flex flex-[1_1_320px] flex-col gap-[18px] self-start p-7",
+                events.length === 0 && "hidden"
+              )}
+            >
+              <h2 className="text-2xl font-extrabold">{home.eventsTitle}</h2>
+              {events.map((item) => (
+                <EventRow key={item.slug} item={item} ctx={ctx} />
+              ))}
+              <Link href={hallHref} className={cn(buttonVariants(), "mt-1")}>
+                {home.openCalendar}
+              </Link>
+            </Card>
           </div>
-          <Card
-            className={cn(
-              "flex flex-[1_1_320px] flex-col gap-[18px] self-start p-7",
-              events.length === 0 && "hidden"
-            )}
-          >
-            <h2 className="text-2xl font-extrabold">{home.eventsTitle}</h2>
-            {events.map((item) => (
-              <EventRow key={item.slug} item={item} ctx={ctx} />
-            ))}
-            <Link href={hallHref} className={cn(buttonVariants(), "mt-1")}>
-              {home.openCalendar}
-            </Link>
-          </Card>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       <section id="services" className="scroll-mt-28 pt-12">
         <Card className="flex flex-wrap gap-10 p-7 sm:p-10">
           <div className="flex flex-[1_1_300px] flex-col gap-3">
             <Overline>{home.servicesOverline}</Overline>
-            <h2 className="text-[clamp(1.75rem,3.3vw,2.5rem)] leading-[1.02] font-extrabold">{home.servicesTitle}</h2>
+            <h2 className="text-[clamp(1.75rem,3.3vw,2.5rem)] leading-[1.02] font-extrabold">
+              {home.servicesTitle}
+            </h2>
             <p className="leading-[1.6] text-muted-foreground">{home.servicesBody}</p>
           </div>
           <div className="grid flex-[2_1_460px] grid-cols-[repeat(auto-fit,minmax(230px,1fr))] content-start gap-3">

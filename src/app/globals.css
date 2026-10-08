@@ -124,7 +124,7 @@
   --accent: #f2b705;
   --accent-foreground: #0b1712;
   /* Gold family: label text on light, tinted surface, and text on that surface */
-  --accent-strong: #b7860b;
+  --accent-strong: #8a6400; /* the design uses #b7860b, which is too faint for small text */
   --accent-soft: #fff6d6;
   --accent-soft-foreground: #7a5a00;
   --accent-ink: #3b2f00;

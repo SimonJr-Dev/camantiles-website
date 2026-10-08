@@ -22,10 +22,18 @@ const escape = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 // ---- English strings that have a different Filipino version ----
 const englishOnly = new Set();
 const slotted = [];
+// Known Filipino text, so a loose English pattern cannot flag it by accident.
+const filipino = new Set();
+const filipinoSlotted = [];
+const toPattern = (text) => new RegExp(`^${escape(text).replace(/\\\{\w+\\\}/g, ".+")}$`);
+
 function add(en, fil) {
   en = normalize(en);
-  if (!en || en === normalize(fil) || en.length < 3) return;
-  if (en.includes("{")) slotted.push(new RegExp(`^${escape(en).replace(/\\\{\w+\\\}/g, ".+")}$`));
+  fil = normalize(fil);
+  if (fil.includes("{")) filipinoSlotted.push(toPattern(fil));
+  else if (fil) filipino.add(fil);
+  if (!en || en === fil || en.length < 3) return;
+  if (en.includes("{")) slotted.push(toPattern(en));
   else englishOnly.add(en);
 }
 
@@ -88,6 +96,7 @@ while (queue.length) {
     issues.push("no link to the English version (hreflang)");
   }
   for (const text of new Set(pieces(html))) {
+    if (filipino.has(text) || filipinoSlotted.some((pattern) => pattern.test(text))) continue;
     if (englishOnly.has(text) || slotted.some((pattern) => pattern.test(text))) {
       issues.push(`English text: "${text}"`);
     }

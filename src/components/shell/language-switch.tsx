@@ -31,9 +31,10 @@ function LanguageSwitch({
           hrefLang={locale}
           lang={locale}
           title={name}
-          aria-label={name}
+          // The spoken name starts with the visible code so voice control ("click EN") works.
+          aria-label={`${locale.toUpperCase()}, ${name}`}
           aria-current={locale === current ? "true" : undefined}
-          className="flex min-h-9 min-w-11 items-center justify-center rounded-full px-3 text-[13px] font-bold text-subtle-foreground uppercase no-underline transition-colors hover:bg-muted aria-[current=true]:bg-accent aria-[current=true]:text-accent-foreground"
+          className="flex min-h-9 min-w-9 items-center justify-center rounded-full px-2 text-[13px] font-bold text-subtle-foreground uppercase sm:min-w-11 sm:px-3 no-underline transition-colors hover:bg-muted aria-[current=true]:bg-accent aria-[current=true]:text-accent-foreground"
         >
           {locale}
         </Link>

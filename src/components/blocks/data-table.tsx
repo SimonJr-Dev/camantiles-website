@@ -24,7 +24,8 @@ function DataTable({
   const s = sizes[size]
 
   return (
-    <Card className="overflow-x-auto p-2">
+    // Focusable so keyboard users can scroll it sideways on narrow screens.
+    <Card role="region" aria-label={caption} tabIndex={0} className="overflow-x-auto p-2">
       <table className={cn("w-full border-collapse text-left", s.min)}>
         <caption className="sr-only">{caption}</caption>
         <thead>

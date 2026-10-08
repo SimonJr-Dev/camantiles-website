@@ -42,3 +42,7 @@ next-env.d.ts
 
 # design comparison screenshots
 /.compare/
+
+# playwright
+/test-results/
+/playwright-report/

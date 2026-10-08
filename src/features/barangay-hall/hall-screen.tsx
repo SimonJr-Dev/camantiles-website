@@ -55,7 +55,10 @@ async function HallScreen({ ctx }: { ctx: PageContext }) {
   ).map((category) => ({ category, label: dict.tags[category] }))
 
   const hours = valueOrPending(site.contact.hours?.[locale], dict.pending.weekdayHours)
-  const phone = valueOrPending(site.hotlines.find((item) => item.id === "hall")?.number, dict.pending.hallNumber)
+  const phone = valueOrPending(
+    site.hotlines.find((item) => item.id === "hall")?.number,
+    dict.pending.hallNumber
+  )
   const files = downloads.filter((item) => item.file || SHOW_PENDING)
 
   return (
@@ -66,7 +69,11 @@ async function HallScreen({ ctx }: { ctx: PageContext }) {
           className="absolute -top-[140px] -right-[100px] box-content size-[380px] rounded-full border-[56px] border-accent/12"
         />
         <div className="relative flex flex-[1_1_480px] flex-col gap-[18px]">
-          <Breadcrumb ctx={ctx} trail={[{ label: dict.sections.hall }]} className="text-[#E6EFEA]" />
+          <Breadcrumb
+            ctx={ctx}
+            trail={[{ label: dict.sections.hall }]}
+            className="text-[#E6EFEA]"
+          />
           <h1 className="text-[clamp(2.25rem,5vw,3.75rem)] leading-[0.98] font-extrabold tracking-[-0.045em]">
             {dict.sections.hall}
           </h1>
@@ -108,24 +115,34 @@ async function HallScreen({ ctx }: { ctx: PageContext }) {
                       : null}
                   {(featured.body ?? featured.summary)[locale]}
                 </p>
-                <Link href={href(featured.slug)} prefetch className={buttonVariants({ className: "self-start" })}>
+                <Link
+                  href={href(featured.slug)}
+                  prefetch
+                  className={buttonVariants({ className: "self-start" })}
+                >
                   {hall.readAnnouncement}
                 </Link>
               </div>
             </article>
           ) : null}
 
-          <AnnouncementList
-            rows={rows}
-            filters={filters}
-            labels={{
-              group: hall.filterLabel,
-              all: hall.filterAll,
-              readMore: hall.readMore,
-              photo: dict.pending.photo,
-              none: hall.noneInCategory,
-            }}
-          />
+          {announcements.length === 0 ? (
+            <Card className="p-8 text-muted-foreground">{hall.empty}</Card>
+          ) : null}
+
+          {rows.length > 0 ? (
+            <AnnouncementList
+              rows={rows}
+              filters={filters}
+              labels={{
+                group: hall.filterLabel,
+                all: hall.filterAll,
+                readMore: hall.readMore,
+                photo: dict.pending.photo,
+                none: hall.noneInCategory,
+              }}
+            />
+          ) : null}
         </div>
 
         <aside className="flex flex-[1_1_320px] flex-col gap-5">

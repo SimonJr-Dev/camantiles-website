@@ -109,6 +109,8 @@ Icons in the source are hand-written SVG paths. Replace with the nearest lucide 
 - Tap targets at least 44px. The source already does this for the language toggle and arrow buttons.
 - Text contrast meets WCAG AA. Check `--inverse-muted` on the footer and any 12px muted text during M7.
 
-## Not in the handoff, to be designed during the build
+## Not in the handoff, designed during the build
 
-Mobile menu, tablet layouts for every page except home, announcement detail page, 404 page, empty states (no announcements, no events), focus styles, and tap behaviour for the Schools dropdown. Use the `impeccable` and `frontend-design` skills for these, held to the tokens above.
+Mobile menu (a panel under the header below 1280px), phone and tablet layouts, the announcement page, the not-found page, empty states, focus styles, the loading skeleton for school and announcement pages, and tap behaviour for the Schools dropdown. All use the tokens above.
+
+One token differs from the source: `--accent-strong` is `#8a6400`, not `#b7860b`, because the original is too faint for small labels on white.

@@ -10,7 +10,9 @@
     "schools": "Schools",
     "allSchools": "All schools",
     "allSchoolsHint": "Enrollment at a glance",
-    "breadcrumb": "Breadcrumb"
+    "breadcrumb": "Breadcrumb",
+    "menu": "Menu",
+    "submenu": "{label} menu"
   },
   "sections": {
     "hall": "Barangay Hall",
@@ -109,7 +111,8 @@
     "council": "Sangguniang Barangay",
     "forms": "Downloadable forms",
     "backToAnnouncements": "Back to announcements",
-    "pageTitle": "Barangay Hall and Announcements"
+    "pageTitle": "Barangay Hall and Announcements",
+    "empty": "No announcements yet. Please check back soon."
   },
   "health": {
     "lead": "Free check-ups, immunization, maternal care and health programs from the Barangay Health Center.",

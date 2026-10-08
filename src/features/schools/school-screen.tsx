@@ -130,7 +130,7 @@ async function SchoolScreen({
         </div>
         <PhotoPlaceholder
           label={photoOf(content.short[locale])}
-          className="relative min-h-[380px] flex-[1_1_380px] rounded-card"
+          className="relative min-h-[220px] flex-[1_1_380px] rounded-card sm:min-h-[380px]"
         />
       </Panel>
 

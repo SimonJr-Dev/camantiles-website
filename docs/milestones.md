@@ -15,7 +15,7 @@ To check any milestone: run `npm run dev`, open the URL listed under "See it", a
 | M4 | Health, SK, Senior Citizens | Done | `/en/health`, `/en/sk`, `/en/senior-citizens` |
 | M5 | Schools | Done | `/en/schools`, `/en/schools/high-school` |
 | M6 | Filipino complete | Done | every page under `/fil` |
-| M7 | Mobile, accessibility, speed, SEO | Not started | any page on a phone |
+| M7 | Mobile, accessibility, speed, SEO | Done | any page on a phone |
 | M8 | Real content and launch | Not started | live domain |
 | M9 | Second-barangay dry run | Not started | `/en/barangays/demo` |
 | M10 | City site integration | Future | — |
@@ -156,17 +156,32 @@ The dev overlay reported that the school page read URL data outside a loading bo
 
 ## M7 — Mobile, accessibility, speed, SEO
 
-- [ ] Mobile menu designed and built
-- [ ] Every page laid out at 360, 390, 768 and 1024px
-- [ ] Fluid type scale applied; body text no smaller than 14px
-- [ ] Schools dropdown works by tap and keyboard
-- [ ] Visible focus styles; skip-to-content link
-- [ ] Colour contrast AA; reduced-motion respected
-- [ ] Automated accessibility scan clean on every route
-- [ ] Images through `next/image`; Lighthouse mobile 90+ on performance, accessibility, SEO
-- [ ] Metadata, Open Graph image, sitemap, robots, structured data
-- [ ] 404 page and empty states
-- [ ] Playwright smoke test for every route in both languages
+- [x] Mobile menu designed and built
+- [x] Every page laid out at 360, 390, 768 and 1024px
+- [x] Fluid type scale on headings; body copy is 14px or larger. Labels, dates and role lines stay at 12 to 13px as in the design
+- [x] Schools dropdown works by tap and keyboard
+- [x] Visible focus styles; skip-to-content link
+- [x] Colour contrast AA; reduced-motion respected
+- [x] Automated accessibility scan clean on every route
+- [x] Images through `next/image`; Lighthouse mobile 90+ on performance, accessibility, best practices and SEO (`npm run check:lighthouse`)
+- [x] Metadata, Open Graph image, sitemap, robots, structured data
+- [x] 404 page and empty states
+- [x] Browser tests for every route in both languages, on desktop and phone sizes (`npm test`)
+
+**Verified 2026-10-08:**
+- `npm test`: 67 browser tests pass in Microsoft Edge against a production build, at desktop and phone sizes. They load all 12 pages in both languages, run the axe accessibility scan (WCAG 2.1 A and AA) on each, and exercise the menu, Schools dropdown, language switch, announcement filter, carousels, grade chips and homecoming year picker.
+- `npm run check:responsive`: no page scrolls sideways at 360, 390, 768, 1024 or 1440px. I looked at the home page at 360, 390 and 768px and the open menu at 390, 768, 1024 and 1280px; the other pages were looked at on a phone only before the last header changes.
+- `npm run check:lighthouse` on four pages of a production build on this machine: performance 90 to 94, accessibility 100, best practices 100, SEO 100.
+- Lint, typecheck, dictionary checks and the Filipino page crawl pass.
+
+What changed from the design:
+- Below 1280px the nav pill is replaced by a menu button that opens a panel listing every section and school, plus Hotlines. The design showed the button but not the open menu.
+- The Schools dropdown has an arrow button, so it opens by tap and keyboard as well as hover.
+- On phones the home quick links become a two-column grid of compact tiles, as in the mobile mock-up, and hero panels lose their fixed minimum height.
+- The gold used for small labels is darker (`#8a6400` instead of `#b7860b`); the original failed the contrast check.
+- The language buttons are 36px wide on phones so the barangay name fits beside them; they are 44px from tablet width up.
+
+Not done here: the home page was not compared pixel for pixel with `mobile-preview.html` (it follows the same structure, with the Next Event card above the tiles rather than below), and nothing was tested on a real phone.
 
 **Done when:** the home page matches `mobile-preview.html` at 390px, every other page is comfortably usable on a phone, and the scans above pass.
 
