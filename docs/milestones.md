@@ -17,7 +17,7 @@ To check any milestone: run `npm run dev`, open the URL listed under "See it", a
 | M6 | Filipino complete | Done | every page under `/fil` |
 | M7 | Mobile, accessibility, speed, SEO | Done | any page on a phone |
 | M8 | Real content and launch | Not started | live domain |
-| M9 | Second-barangay dry run | Not started | `/en/barangays/demo` |
+| M9 | Second-barangay dry run | Deferred until after the city site | `/en/barangays/demo` |
 | M10 | City site integration | Future | — |
 | M11 | Content admin and user roles | Not started | `/admin` |
 

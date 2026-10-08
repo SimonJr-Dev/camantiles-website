@@ -36,5 +36,6 @@ Numbers 1 to 11 are the original open questions, settled on 2026-10-08 by accept
 | — | 2026-10-08 | Design source kept in `docs/ui-source/` as the visual reference. | Parity checks need it in the repo, not in a Downloads folder. |
 | — | 2026-10-08 | Access is a role at a scope (platform, city, barangay, section, school); the public site stays login-free. Roles defined in [user-roles.md](user-roles.md). | Each office owns its own content; the city oversees many barangays. |
 | — | 2026-10-08 | Content records carry site, scope, status and author from the start, even while content is files. | Lets logins and approval be added in M11 without reshaping content. |
+| — | 2026-10-08 | The second-barangay dry run (M9) waits until after the city site. | No other barangay site is planned before the city site is built. |
 
 Add a row whenever a new choice is made.
