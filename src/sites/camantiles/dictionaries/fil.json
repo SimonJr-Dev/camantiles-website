@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "description": "Mga anunsyo, programa at serbisyo mula sa Barangay Hall, sa SK, sa ating mga Senior Citizen at sa ating mga paaralan."
+  },
+  "home": {
+    "heroLine1": "Camantiles,",
+    "heroLine2": "lahat sa iisang lugar.",
+    "lead": "Mga anunsyo, programa at serbisyo mula sa Barangay Hall, sa SK, sa ating mga Senior Citizen at sa ating mga paaralan.",
+    "schoolsTitle": "Mga Paaralan ng Camantiles",
+    "quick": {
+      "hall": "Mga anunsyo, opisyal at serbisyo",
+      "sk": "Mga programa para sa kabataan, palakasan at scholarship",
+      "seniors": "Iskedyul ng pensyon, kalusugan at mga gawain",
+      "schools": "Day Care, Elementarya at High School"
+    }
+  }
+}

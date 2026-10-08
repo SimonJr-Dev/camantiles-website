@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "description": "Announcements, programs and services from the Barangay Hall, the SK, our Senior Citizens and our schools."
+  },
+  "home": {
+    "heroLine1": "Camantiles,",
+    "heroLine2": "all in one place.",
+    "lead": "Announcements, programs and services from the Barangay Hall, the SK, our Senior Citizens and our schools.",
+    "schoolsTitle": "Camantiles Schools",
+    "quick": {
+      "hall": "Announcements, officials and services",
+      "sk": "Youth programs, sports and scholarships",
+      "seniors": "Pension schedules, health and activities",
+      "schools": "Day Care, Elementary and High School"
+    }
+  }
+}
