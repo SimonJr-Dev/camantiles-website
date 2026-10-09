@@ -6,7 +6,9 @@ Facts only you can supply. None of them blocks building; each is needed by the m
 
 | Item | Needed by |
 | --- | --- |
-| Hosting provider (any Node.js host: Vercel, a VPS, or similar) | M8 |
+| Hosting provider (any Node.js host with PostgreSQL: Vercel plus a managed database, a VPS, or similar) | M8 |
+| A mail provider for invitation and password-reset emails | M11 stage C |
+| Where uploaded photos and PDFs are stored (depends on the host) | M11 stage C |
 | Domain name | M8 |
 | Name and email of the Barangay Secretary, for the first admin account | M11 |
 | Who builds the city site, if that turns out not to be this team | M10 |
@@ -37,5 +39,7 @@ Numbers 1 to 11 are the original open questions, settled on 2026-10-08 by accept
 | — | 2026-10-08 | Access is a role at a scope (platform, city, barangay, section, school); the public site stays login-free. Roles defined in [user-roles.md](user-roles.md). | Each office owns its own content; the city oversees many barangays. |
 | — | 2026-10-08 | Content records carry site, scope, status and author from the start, even while content is files. | Lets logins and approval be added in M11 without reshaping content. |
 | — | 2026-10-08 | The second-barangay dry run (M9) waits until after the city site. | No other barangay site is planned before the city site is built. |
+| — | 2026-10-08 | The backend is our own database and admin screens: PostgreSQL through Drizzle, sign-in by better-auth. | No monthly CMS fee; the role and scope model fits exactly; the same system serves the city site later. PostgreSQL runs on every hosting option still open. |
+| — | 2026-10-08 | The staff area is in English only for now. | Fewer screens to translate while they are still changing; Filipino can be added later. |
 
 Add a row whenever a new choice is made.

@@ -11,7 +11,7 @@ export default async function NotFound() {
   const site = getSite();
   if (!site) return null;
   const requested = await lang();
-  const locale = hasLocale(site, requested) ? requested : site.defaultLocale;
+  const locale = requested && hasLocale(site, requested) ? requested : site.defaultLocale;
   const dict = await getDictionary(site, locale);
 
   return (

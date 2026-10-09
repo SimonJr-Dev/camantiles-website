@@ -113,4 +113,15 @@ Icons in the source are hand-written SVG paths. Replace with the nearest lucide 
 
 Mobile menu (a panel under the header below 1280px), phone and tablet layouts, the announcement page, the not-found page, empty states, focus styles, the loading skeleton for school and announcement pages, and tap behaviour for the Schools dropdown. All use the tokens above.
 
+## Staff area
+
+The staff area (`/admin`) uses the same tokens with a plainer, denser layout, since it is a tool rather than a showcase.
+
+- **Frame:** a 272px white sidebar on screens 1024px and wider; below that, a top bar with a menu button and a panel that slides in from the right. Content is capped at 1040px.
+- **Menu:** grouped as Overview, Content and Administration. A person only sees the areas their roles reach. Rows are 44px tall with an icon and a label; the current page is a green pill.
+- **Status:** `StatusBadge` shows Draft, In review, Published or Archived with its own icon, word and colour, so it never depends on colour alone.
+- **Forms:** a visible label above every field, 48px inputs, the error in a red panel with an icon directly above the fields and announced to screen readers, and a spinner with changed wording while saving.
+- **Sign-in:** a green brand panel beside the form on wide screens, reduced to a header strip on phones.
+- **Language:** English only for now.
+
 One token differs from the source: `--accent-strong` is `#8a6400`, not `#b7860b`, because the original is too faint for small labels on white.

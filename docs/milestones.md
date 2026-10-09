@@ -19,7 +19,7 @@ To check any milestone: run `npm run dev`, open the URL listed under "See it", a
 | M8 | Real content and launch | Not started | live domain |
 | M9 | Second-barangay dry run | Deferred until after the city site | `/en/barangays/demo` |
 | M10 | City site integration | Future | — |
-| M11 | Content admin and user roles | Not started | `/admin` |
+| M11 | Content admin and user roles | In progress: stage A of 3 done | `/admin` |
 
 Status values: Not started · In progress · Blocked (say on what) · Done.
 
@@ -235,22 +235,49 @@ Scope to be set when the city project starts. See [multi-site-plan.md](multi-sit
 
 ## M11 — Content admin and user roles
 
-Lets staff post without a developer. Roles and rules are defined in [user-roles.md](user-roles.md). Can start any time after M5.
+Lets staff post without a developer. Roles and rules are defined in [user-roles.md](user-roles.md). Built in three stages; each ends in something you can sign in and try.
 
-- [ ] CMS or database and sign-in method chosen
-- [ ] Content moved from files to the chosen store, behind the same `src/content/` functions
-- [ ] Sign-in, invite by email, password reset; two-step sign-in for admins
-- [ ] Roles: Section Editor, School Editor, Barangay Editor, Approver, Barangay Admin, Super Admin
-- [ ] Scoping: an editor sees and edits only their barangay, section or school
-- [ ] One server-side permission check used by every save and publish
+Stack (decided 2026-10-08): our own database and admin screens. PostgreSQL through Drizzle; sign-in by better-auth. Locally the database runs from `node_modules` with no installer (`npm run dev` starts it); production connects to whatever `DATABASE_URL` names.
+
+Try it: `npm run dev`, then `npm run db:seed -- --demo` once, then open `/admin`. Sign in as `admin@camantiles.local` with the password `password`. The demo accounts (`secretary@`, `hall@`, `captain@`, `sk@`, `health@`, `highschool@`, all `@camantiles.local`) use the same password. `npm run db:passwords` sets every local account back to it. These accounts and that password exist only in the local database: the seed script refuses to create them in production, where the first admin's email and password must be supplied.
+
+### Stage A — database, sign-in and roles: Done
+
+- [x] PostgreSQL schema and migrations (`src/db/schema.ts`, `drizzle/`)
+- [x] Sign-in with email and password; no public sign-up; sessions in the database
+- [x] Roles and scopes as data: one user can hold several assignments, each with an optional end date
+- [x] One server-side permission check, `can()`, with 17 tests proving a user cannot reach outside their barangay, section or school
+- [x] Staff area at `/admin`: sign-in page, a home page showing your access, sign out
+- [x] Staff area layout: a sidebar on wide screens and a slide-in menu on phones, showing only the areas your roles reach; status badges with an icon and a word; a loading placeholder for each page
+- [x] Suspended accounts and ended terms are refused
+- [x] Activity log table (nothing writes to it yet)
+
+**Verified 2026-10-08:** `npm test` passes 77 browser tests on a production build with the database. The staff-area tests cover: visitors are sent to sign-in; a wrong password and an unknown email get the same message; an admin signs in and out; a section editor sees only their own section; the sign-up endpoint is refused. `npm run test:unit` passes the 17 permission tests.
+
+**Layout redone 2026-10-08** with the UI UX Pro Max skill as a guide. Its general suggestions (a dark palette, a code font, scroll animation) were set aside in favour of the site's own colours and type; what was used is its guidance on a plain functional layout, status shown by icon and text as well as colour, visible labels, errors beside the form, and 44px touch targets. `npm test` now passes 82 browser tests, with the accessibility scan run on the sign-in page, the dashboard and the open menu, and `npm run test:unit` passes 18. The desktop dashboard and the sign-in page on both sizes were checked by eye; the phone dashboard was checked by tests only. The menu lists sections that are not built yet as "Soon" and not clickable.
+
+The dev overlay reported that `/admin` read the session outside a loading boundary. Each staff page now has one (`loading.tsx`), and `node scripts/dev-issues.mjs` confirms the overlay is clear on `/admin` and on the school and announcement pages fixed earlier; removing the boundary makes the warning return.
+
+### Stage B — announcements end to end: Not started
+
+- [ ] Announcements, events and the advisory stored in the database, behind the same `src/content/` functions
+- [ ] One-off import of the current file content
+- [ ] Editing screen in English and Filipino
 - [ ] Draft → In review → Published → Archived, with send-back notes
 - [ ] Advisories publish immediately
-- [ ] Editing screens for each section's content, in English and Filipino, with photo and file upload
-- [ ] Barangay Admin screens: users and access, site details, officials
-- [ ] Activity log
+- [ ] Editors see and edit only their own scope; every save goes through `can()`
 - [ ] Published changes appear on the public site without a redeploy
-- [ ] Tests proving a user cannot read or change anything outside their scope
-- [ ] Short how-to guide for each role; accounts created for Camantiles staff
-- [ ] City Admin and City Editor roles (built with M10 if the city site comes later)
+- [ ] Activity log entries for every create, edit, publish and unpublish
+
+### Stage C — everything else: Not started
+
+- [ ] Editing for officials, services, forms, and the Health, SK, Senior Citizens and school pages
+- [ ] Photo and file upload (needs a storage choice at hosting time)
+- [ ] Barangay Admin screens: invite and remove users, set their access, edit site details
+- [ ] Invitation and password-reset emails (needs a mail provider; today they are printed to the server log)
+- [ ] Two-step sign-in, required for admins
+- [ ] Activity log screen
+- [ ] Short how-to guide for each role; real accounts for Camantiles staff
+- [ ] City Admin and City Editor screens (built with M10)
 
 **Done when:** the SK editor can post an SK update, cannot touch Barangay Hall or another barangay's content, the approver publishes it, and it appears on `/en/sk` and `/fil/sk` within a minute.

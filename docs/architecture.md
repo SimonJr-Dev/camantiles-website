@@ -160,15 +160,24 @@ Full definition in [user-roles.md](user-roles.md). The architectural consequence
 - **Access is a role at a scope.** Roles: Visitor, Section or School Editor, Barangay Editor, Approver, Barangay Admin, City Editor, City Admin, Super Admin. Scopes: platform, city, barangay, section, school. Scopes line up exactly with what already exists in the site config: a barangay is a `Site`, a section is a `SiteModule`, a school is an entry in `schools`.
 - **Content records are role-ready from M1.** Each record carries `site`, `scope` (module or school slug), `status` (`draft` | `review` | `published` | `archived`), `author` and timestamps. File-based content sets `status: 'published'`; the content functions already filter on it, so adding drafts later changes no page.
 - **The admin is a separate area.** When built (M11) it lives at `app/admin/`, outside `[lang]`, never prerendered, with its own layout. `proxy.ts` may redirect signed-out users away from it as a convenience, but every read and write checks role and scope on the server, in one `can(user, action, resource)` function that all Server Actions and content writes go through.
-- **Auth and storage are chosen with the CMS,** at the start of M11. Either a hosted CMS that provides users, roles and workflow, or a database with an auth library and the admin built here. The role model in [user-roles.md](user-roles.md) is the requirement either choice must meet, in particular per-site and per-section scoping.
+- **Stack:** PostgreSQL through Drizzle (`src/db/`), sign-in by better-auth (`src/auth/auth.ts`). `src/auth/session.ts` is the only place that reads the session, and `authorize(action, resource)` there is what every save calls. Sessions are read inside a `<Suspense>` boundary, as Cache Components requires, so the admin frame stays static.
+- **Local database:** `npm run dev` starts a real PostgreSQL server from `node_modules` (the `embedded-postgres` package), applies migrations, then starts Next.js. Data lives in `.data/`, which is not committed.
 
 ```
 src/
   auth/
-    roles.ts        Role, Scope, Assignment types
+    roles.ts        Role, Action, Assignment types
     can.ts          can(user, action, resource) — the single permission check
+    can.test.ts     its tests
+    auth.ts         sign-in configuration
+    session.ts      getCurrentUser(), requireUser(), authorize()
+  db/
+    schema.ts       tables: sign-in, assignments, activity log
+    client.ts       the connection
   app/
-    admin/          added in M11
+    admin/          the staff area, with its own root layout
+    api/auth/       sign-in endpoints
+drizzle/            SQL migrations generated from the schema
 ```
 
 ## Theming

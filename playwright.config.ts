@@ -4,7 +4,8 @@ const PORT = Number(process.env.PORT ?? 3100);
 const baseURL = process.env.BASE_URL ?? `http://localhost:${PORT}`;
 
 // Tests run in Microsoft Edge, which is already on Windows, so no browser
-// download is needed. They run against a production build on its own port, so
+// download is needed. They run against a production build on its own port,
+// with the local database and sample accounts (scripts/test-server.mjs), so
 // they do not disturb a dev server on 3000; a server already on that port is reused.
 export default defineConfig({
   testDir: "e2e",
@@ -21,7 +22,7 @@ export default defineConfig({
     { name: "phone", use: { ...devices["Pixel 7"], channel: "msedge" } },
   ],
   webServer: {
-    command: `npm run build && npm run start -- -p ${PORT}`,
+    command: `node scripts/test-server.mjs ${PORT}`,
     url: `${baseURL}/en`,
     reuseExistingServer: true,
     timeout: 240_000,
